@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Offer Calculator • MarketersRemote.com</title>
+<meta name="description" content="Free Career Offer Calculator for marketing professionals. Compare true total comp, 3-year ROI, and career quality score across 3 roles. Trusted by 1,800+ marketers at $50K–$250K.">
+<meta name="keywords" content="job offer calculator, career offer comparison, total compensation calculator, marketing salary calculator, job offer ROI, career decision tool">
+<link rel="canonical" href="https://marketersremote.github.io/career-offer-calculator/">
+<meta property="og:title" content="Free Career Offer Calculator — MarketersRemote.com">
+<meta property="og:description" content="Compare job offers in 60 seconds. True total comp, 3-year ROI, career quality score. Free for marketing professionals.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://marketersremote.github.io/career-offer-calculator/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Career Offer Calculator","description":"Free job offer comparison tool for marketing professionals — true total comp, 3-year ROI, career quality score","url":"https://marketersremote.github.io/career-offer-calculator/","applicationCategory":"BusinessApplication","operatingSystem":"Web","provider":{"@type":"Organization","name":"MarketersRemote","url":"https://marketersremote.com"}}</script>
+<style>
+:root{
+  --navy:#0D1B2A;--teal:#0077B6;--gold:#F4A300;--lteal:#90E0EF;
+  --lgold:#FFF8E1;--dgray:#343A40;--mgray:#6C757D;--lgray:#F8F9FA;
+  --green:#198754;--red:#DC3545;--orange:#FD7E14;--white:#FFFFFF;
+  --border:#E5E7EB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#f0f4f8 0%,#e8eef5 100%);color:var(--dgray);min-height:100vh}
+.wrap{max-width:1320px;margin:0 auto;padding:24px 16px}
+
+/* ── TOP NAV ── */
+.topnav{display:flex;justify-content:space-between;align-items:center;background:var(--navy);border-radius:14px;padding:14px 28px;margin-bottom:28px}
+.topnav .brand{font-size:1.3em;font-weight:900;color:var(--gold);text-decoration:none;letter-spacing:.5px}
+.topnav a{color:rgba(255,255,255,.8);text-decoration:none;font-weight:600;font-size:.9em;margin-left:24px;transition:color .2s}
+.topnav a:hover{color:var(--gold)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#104E8B 60%,var(--teal) 100%);border-radius:22px;padding:52px 40px 48px;text-align:center;margin-bottom:32px;box-shadow:0 24px 48px rgba(13,27,42,.25);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:rgba(244,163,0,.07);border-radius:50%}
+.hero h1{font-size:2.8em;font-weight:900;background:linear-gradient(90deg,var(--gold),#FFD54F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;line-height:1.15}
+.hero p{color:rgba(255,255,255,.92);font-size:1.2em;margin-bottom:8px}
+.hero .sub{font-size:.95em;color:rgba(255,255,255,.7);margin-bottom:32px}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--navy);padding:16px 38px;border-radius:50px;font-size:1.1em;font-weight:800;text-decoration:none;border:none;cursor:pointer;box-shadow:0 8px 28px rgba(244,163,0,.45);transition:all .3s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(244,163,0,.6)}
+.btn-secondary{background:transparent;border:2px solid rgba(255,255,255,.5);color:white;padding:16px 38px;border-radius:50px;font-size:1.1em;font-weight:700;text-decoration:none;cursor:pointer;transition:all .3s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── TABS ── */
+.tabs{display:flex;background:white;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.09);overflow:hidden;margin-bottom:24px}
+.tab-btn{flex:1;padding:18px 10px;background:var(--lgray);border:none;font-size:.95em;font-weight:700;cursor:pointer;transition:all .3s;color:var(--mgray);position:relative;border-right:1px solid var(--border)}
+.tab-btn:last-child{border-right:none}
+.tab-btn.active{background:var(--navy);color:var(--gold)}
+.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--gold)}
+.tab-btn:hover:not(.active){background:#e9ecef;color:var(--dgray)}
+
+/* ── TAB CONTENT ── */
+.tab-pane{background:white;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.09);padding:32px;display:none}
+.tab-pane.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{background:var(--navy);color:var(--gold);padding:13px 22px;border-radius:10px;font-size:1em;font-weight:800;margin:28px 0 18px;letter-spacing:.5px}
+.sec-hdr:first-child{margin-top:0}
+
+/* ── INPUT TABLE ── */
+.inp-table{width:100%;border-collapse:separate;border-spacing:0 6px}
+.inp-table th{padding:12px 16px;font-size:.82em;font-weight:800;text-transform:uppercase;letter-spacing:.8px;border-bottom:2px solid var(--border);color:var(--mgray)}
+.inp-table th.col-a{background:linear-gradient(135deg,#E8F4FD,#D1ECF1);color:var(--teal);border-radius:8px 8px 0 0}
+.inp-table th.col-b{background:linear-gradient(135deg,#FFF3CD,#FFE5B4);color:#856404;border-radius:8px 8px 0 0}
+.inp-table th.col-cur{background:var(--lgray);color:var(--dgray);border-radius:8px 8px 0 0}
+.inp-table td{padding:6px 8px;vertical-align:middle}
+.inp-table td.field-label{padding:10px 16px;font-weight:600;font-size:.92em;color:var(--dgray);background:var(--lgray);border-radius:8px;width:38%}
+.inp-table td.field-label .hint{font-size:.8em;color:var(--mgray);font-weight:400;display:block;margin-top:2px}
+.inp-table tr:nth-child(even) td.field-label{background:#F1F3F5}
+input[type=number],input[type=text]{width:100%;padding:11px 14px;border:2px solid var(--lgold);border-radius:9px;font-size:.97em;font-weight:600;background:var(--lgold);transition:all .25s;color:var(--dgray)}
+input[type=number]:focus,input[type=text]:focus{outline:none;border-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(244,163,0,.12)}
+
+/* ── RESULT TABLE ── */
+.res-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.res-table th{padding:14px 16px;text-align:center;font-size:.83em;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.res-table th.h-cur{background:var(--dgray);color:white;border-radius:8px 0 0 0}
+.res-table th.h-a{background:var(--teal);color:white}
+.res-table th.h-b{background:var(--orange);color:white;border-radius:0 8px 0 0}
+.res-table th.h-lbl{background:var(--navy);color:var(--gold);text-align:left;padding-left:18px;border-radius:8px 0 0 0}
+.res-table td{padding:11px 16px;border-bottom:1px solid var(--border);text-align:center;font-size:.95em;font-weight:600}
+.res-table td.lbl{text-align:left;padding-left:18px;font-weight:600;color:var(--dgray);background:var(--lgray);font-size:.9em}
+.res-table tr:hover td{background:#f7f9fc}
+.res-table tr.total-row td{font-weight:900;font-size:1.05em;background:var(--lgray)}
+.res-table tr.total-row td.lbl{background:#e9ecef;color:var(--navy)}
+.best-val{color:var(--green);font-weight:900}
+.worst-val{color:var(--red)}
+
+/* ── COMP CARDS ── */
+.comp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+.comp-card{border-radius:16px;padding:28px 22px;text-align:center;position:relative;overflow:hidden}
+.comp-card .role-name{font-size:.85em;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.85;margin-bottom:8px}
+.comp-card .amount{font-size:2.4em;font-weight:900;margin:8px 0}
+.comp-card .sub-amount{font-size:.9em;opacity:.8}
+.card-cur{background:linear-gradient(135deg,var(--dgray),#495057);color:white}
+.card-a{background:linear-gradient(135deg,var(--teal),#023E8A);color:white}
+.card-b{background:linear-gradient(135deg,var(--orange),#D62828);color:white}
+.card-winner::after{content:'🏆 BEST';position:absolute;top:14px;right:14px;background:var(--gold);color:var(--navy);font-size:.7em;font-weight:900;padding:4px 10px;border-radius:20px}
+.rule30-badge{display:inline-block;padding:8px 18px;border-radius:20px;font-size:.87em;font-weight:700;margin-top:10px}
+.rule30-yes{background:#D1FAE5;color:#065F46}
+.rule30-no{background:#FEF3C7;color:#92400E}
+
+/* ── SCORECARD ── */
+.score-grid{display:grid;grid-template-columns:1fr 120px 120px 120px 120px 100px 100px;gap:8px;align-items:center;margin-bottom:8px}
+.score-hdr{font-size:.78em;font-weight:800;text-transform:uppercase;letter-spacing:.6px;text-align:center;padding:10px 8px;border-radius:8px}
+.score-hdr.h-crit{text-align:left;background:var(--navy);color:var(--gold)}
+.score-hdr.h-wt{background:#E8F4FD;color:var(--teal)}
+.score-hdr.h-cur{background:var(--lgray);color:var(--dgray)}
+.score-hdr.h-a{background:#E8F4FD;color:var(--teal)}
+.score-hdr.h-b{background:#FFF3CD;color:#856404}
+.score-hdr.h-wcur{background:rgba(52,58,64,.12);color:var(--dgray)}
+.score-hdr.h-wa{background:rgba(0,119,182,.15);color:var(--teal)}
+.score-hdr.h-wb{background:rgba(253,126,20,.15);color:var(--orange)}
+.score-row{display:contents}
+.score-label{padding:10px 14px;font-size:.88em;font-weight:600;background:var(--lgray);border-radius:8px;color:var(--dgray)}
+.score-wt input{text-align:center;background:#E8F4FD}
+.score-sc input{text-align:center}
+.score-wt input:focus,.score-sc input:focus{background:white}
+.score-calc{padding:10px 8px;text-align:center;border-radius:8px;font-weight:800;font-size:.95em}
+.sc-cur{background:rgba(52,58,64,.1);color:var(--dgray)}
+.sc-a{background:rgba(0,119,182,.12);color:var(--teal)}
+.sc-b{background:rgba(253,126,20,.15);color:var(--orange)}
+.wt-warn{background:#FEF3C7;border:2px solid var(--gold);color:#92400E;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.9em;margin-bottom:14px;display:none}
+.score-total-row{display:grid;grid-template-columns:1fr 120px 120px 120px 120px 100px 100px;gap:8px;align-items:center;margin-top:10px;border-top:3px solid var(--navy);padding-top:12px}
+.score-total-lbl{font-weight:900;font-size:1em;color:var(--navy);padding:12px 14px;background:var(--lgray);border-radius:8px}
+.score-total-blank{background:var(--lgray);border-radius:8px;padding:12px}
+.score-total-val{padding:12px 8px;text-align:center;border-radius:8px;font-weight:900;font-size:1.15em}
+.stv-cur{background:var(--dgray);color:white}
+.stv-a{background:var(--teal);color:white}
+.stv-b{background:var(--orange);color:white}
+
+/* ── DASHBOARD ── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.dash-card{border-radius:16px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.dash-card h3{font-size:1em;font-weight:800;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:3px solid var(--gold)}
+.dash-table{width:100%;border-collapse:collapse}
+.dash-table td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:.9em}
+.dash-table td:first-child{font-weight:600;color:var(--dgray);width:55%}
+.dash-table td:not(:first-child){text-align:center;font-weight:800}
+.flag-box{border-radius:14px;padding:18px 22px;margin-bottom:14px;display:flex;align-items:flex-start;gap:14px}
+.flag-icon{font-size:1.6em;flex-shrink:0}
+.flag-text strong{display:block;font-size:.9em;color:var(--mgray);font-weight:700;margin-bottom:4px}
+.flag-text p{font-size:.95em;font-weight:600}
+.flag-blue{background:#E8F4FD}
+.flag-gold{background:#FFF8E1}
+.flag-green{background:#D1FAE5}
+.flag-red{background:#FEF2F2}
+.rec-box{border-radius:20px;padding:38px 36px;text-align:center;margin-bottom:28px;border:4px solid transparent}
+.rec-box .rec-title{font-size:1.05em;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;opacity:.85}
+.rec-box .rec-verdict{font-size:1.6em;font-weight:900;line-height:1.4}
+.rec-stay{background:linear-gradient(135deg,var(--navy),#1a3a5c);color:white;border-color:var(--green)}
+.rec-offa{background:linear-gradient(135deg,var(--navy),#023E8A);color:white;border-color:var(--teal)}
+.rec-offb{background:linear-gradient(135deg,#1a1a2e,#6a0a0a);color:white;border-color:var(--orange)}
+.rec-mixed{background:linear-gradient(135deg,var(--navy),#2d2d2d);color:white;border-color:var(--gold)}
+
+/* ── NEWSLETTER CTA ── */
+.nl-cta{background:linear-gradient(135deg,var(--gold) 0%,#FFB700 100%);border-radius:22px;padding:48px 40px;text-align:center;margin-top:36px;box-shadow:0 16px 40px rgba(244,163,0,.3)}
+.nl-cta h2{font-size:2em;font-weight:900;color:var(--navy);margin-bottom:12px}
+.nl-cta p{font-size:1.1em;color:#4A3000;margin-bottom:28px}
+.nl-cta .proof{font-size:.9em;color:#7A5200;margin-top:18px}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:28px 0 12px;color:var(--mgray);font-size:.85em}
+.footer a{color:var(--teal);text-decoration:none;font-weight:700;margin:0 12px}
+.footer a:hover{text-decoration:underline}
+
+/* ── HELPERS ── */
+.row-gap{height:16px}
+.tip{font-size:.82em;color:var(--mgray);font-style:italic;margin-top:4px}
+.section-intro{font-size:.95em;color:var(--mgray);margin-bottom:22px;line-height:1.7}
+
+@media(max-width:960px){
+  .dash-grid{grid-template-columns:1fr}
+  .score-grid,.score-total-row{grid-template-columns:1fr 80px 80px 80px 80px 70px 70px}
+}
+@media(max-width:768px){
+  .tabs{flex-wrap:wrap}
+  .tab-btn{flex:1 1 33%;font-size:.8em;padding:14px 6px}
+  .comp-cards{grid-template-columns:1fr}
+  .hero h1{font-size:2em}
+  .inp-table th.col-a,.inp-table th.col-b,.inp-table th.col-cur{display:none}
+  .score-grid,.score-total-row{grid-template-columns:1fr repeat(6,60px);font-size:.78em}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="https://marketersremote.github.io/" class="brand">MARKETERS REMOTE</a>
+  <div>
+    <a href="https://marketersremote.github.io/#calculators">All Tools</a>
+    <a href="https://marketersremote.github.io/fcmo-scorecard/">FCMO Scorecard</a>
+    <a href="https://www.marketersremote.com" target="_blank" rel="noopener">Subscribe →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🎯 Career Offer Calculator</h1>
+  <p>Compare any job offer in 60 seconds. True total comp · 3-year ROI · Career quality score.</p>
+  <p class="sub">Built for marketing professionals making $50K–$250K · Trusted by 1,800+ marketers</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.querySelector('.tabs').scrollIntoView({behavior:'smooth'})">🚀 Start Comparing</button>
+    <a href="https://www.marketersremote.com" class="btn-secondary" target="_blank" rel="noopener">Get Weekly Jobs →</a>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active"   onclick="showTab('inputs',this)">📥 Inputs</button>
+  <button class="tab-btn"          onclick="showTab('comp',this)">💰 Total Comp</button>
+  <button class="tab-btn"          onclick="showTab('projector',this)">📈 3-Year ROI</button>
+  <button class="tab-btn"          onclick="showTab('scorecard',this)">🏆 Career Score</button>
+  <button class="tab-btn"          onclick="showTab('dashboard',this)">🎯 Dashboard</button>
+</div>
+
+<!-- ══════════════════ TAB 1: INPUTS ══════════════════ -->
+<div id="tab-inputs" class="tab-pane active">
+  <p class="section-intro">Fill in the yellow fields for each role. Leave Offer B blank if comparing only two options. All values update automatically across every tab.</p>
+
+  <div class="sec-hdr">▸ ROLE OVERVIEW</div>
+  <table class="inp-table">
+    <tr><th style="width:38%">Field</th><th class="col-cur">Current Role</th><th class="col-a">Offer A</th><th class="col-b">Offer B</th></tr>
+    <tr><td class="field-label">Company Name</td>
+      <td><input type="text" id="cur_co" placeholder="Acme Inc." oninput="calc()"></td>
+      <td><input type="text" id="a_co" placeholder="BigCo Ltd." oninput="calc()"></td>
+      <td><input type="text" id="b_co" placeholder="StartupXYZ" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Job Title</td>
+      <td><input type="text" id="cur_title" placeholder="Marketing Director" oninput="calc()"></td>
+      <td><input type="text" id="a_title" placeholder="PMM Director" oninput="calc()"></td>
+      <td><input type="text" id="b_title" placeholder="Head of Marketing" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Company Size<span class="hint">Number of employees</span></td>
+      <td><input type="number" id="cur_size" placeholder="50" oninput="calc()"></td>
+      <td><input type="number" id="a_size" placeholder="5000" oninput="calc()"></td>
+      <td><input type="number" id="b_size" placeholder="200" oninput="calc()"></td></tr>
+  </table>
+
+  <div class="sec-hdr">▸ BASE COMPENSATION</div>
+  <table class="inp-table">
+    <tr><th style="width:38%">Field</th><th class="col-cur">Current Role ($)</th><th class="col-a">Offer A ($)</th><th class="col-b">Offer B ($)</th></tr>
+    <tr><td class="field-label">Annual Base Salary</td>
+      <td><input type="number" id="cur_base" placeholder="150000" oninput="calc()"></td>
+      <td><input type="number" id="a_base" placeholder="155000" oninput="calc()"></td>
+      <td><input type="number" id="b_base" placeholder="152000" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Target Annual Bonus %<span class="hint">e.g. 0.15 = 15%</span></td>
+      <td><input type="number" id="cur_bpct" step="0.01" placeholder="0.15" oninput="calc()"></td>
+      <td><input type="number" id="a_bpct" step="0.01" placeholder="0.20" oninput="calc()"></td>
+      <td><input type="number" id="b_bpct" step="0.01" placeholder="0.10" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Bonus Payout Likelihood %<span class="hint">Your honest estimate — e.g. 0.80 = 80%</span></td>
+      <td><input type="number" id="cur_blike" step="0.01" placeholder="0.80" oninput="calc()"></td>
+      <td><input type="number" id="a_blike" step="0.01" placeholder="0.75" oninput="calc()"></td>
+      <td><input type="number" id="b_blike" step="0.01" placeholder="0.60" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Signing Bonus (Year 1 only)</td>
+      <td><input type="number" id="cur_sign" placeholder="0" oninput="calc()"></td>
+      <td><input type="number" id="a_sign" placeholder="10000" oninput="calc()"></td>
+      <td><input type="number" id="b_sign" placeholder="5000" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Total Equity Grant Value<span class="hint">RSU grant value or options at strike price</span></td>
+      <td><input type="number" id="cur_eq" placeholder="0" oninput="calc()"></td>
+      <td><input type="number" id="a_eq" placeholder="100000" oninput="calc()"></td>
+      <td><input type="number" id="b_eq" placeholder="50000" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Equity Vesting Period (years)</td>
+      <td><input type="number" id="cur_vest" placeholder="4" oninput="calc()"></td>
+      <td><input type="number" id="a_vest" placeholder="4" oninput="calc()"></td>
+      <td><input type="number" id="b_vest" placeholder="4" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Equity Payout Likelihood %<span class="hint">Public RSUs ≈ 0.95 · Early startup ≈ 0.15</span></td>
+      <td><input type="number" id="cur_elike" step="0.01" placeholder="0.50" oninput="calc()"></td>
+      <td><input type="number" id="a_elike" step="0.01" placeholder="0.95" oninput="calc()"></td>
+      <td><input type="number" id="b_elike" step="0.01" placeholder="0.30" oninput="calc()"></td></tr>
+  </table>
+
+  <div class="sec-hdr">▸ BENEFITS & PERKS</div>
+  <table class="inp-table">
+    <tr><th style="width:38%">Field</th><th class="col-cur">Current Role</th><th class="col-a">Offer A</th><th class="col-b">Offer B</th></tr>
+    <tr><td class="field-label">Monthly Health Premium (your cost $)<span class="hint">What you personally pay each month</span></td>
+      <td><input type="number" id="cur_health" placeholder="200" oninput="calc()"></td>
+      <td><input type="number" id="a_health" placeholder="150" oninput="calc()"></td>
+      <td><input type="number" id="b_health" placeholder="250" oninput="calc()"></td></tr>
+    <tr><td class="field-label">401k / Pension Match %<span class="hint">e.g. 0.04 = 4% match</span></td>
+      <td><input type="number" id="cur_401" step="0.01" placeholder="0.04" oninput="calc()"></td>
+      <td><input type="number" id="a_401" step="0.01" placeholder="0.06" oninput="calc()"></td>
+      <td><input type="number" id="b_401" step="0.01" placeholder="0.03" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Annual PTO Days</td>
+      <td><input type="number" id="cur_pto" placeholder="20" oninput="calc()"></td>
+      <td><input type="number" id="a_pto" placeholder="25" oninput="calc()"></td>
+      <td><input type="number" id="b_pto" placeholder="22" oninput="calc()"></td></tr>
+    <tr><td class="field-label">Annual L&amp;D / Training Budget ($)</td>
+      <td><input type="number" id="cur_ld" placeholder="1000" oninput="calc()"></td>
+      <td><input type="number" id="a_ld" placeholder="3000" oninput="calc()"></td>
+      <td><input type="number" id="b_ld" placeholder="500" oninput="calc()"></td></tr>
+  </table>
+
+  <div class="sec-hdr">▸ CAREER TRAJECTORY</div>
+  <table class="inp-table">
+    <tr><th style="width:38%">Field</th><th class="col-cur">Current Role</th><th class="col-a">Offer A</th><th class="col-b">Offer B</th></tr>
+    <tr><td class="field-label">Expected Annual Raise %<span class="hint">e.g. 0.05 = 5% per year</span></td>
+      <td><input type="number" id="cur_raise" step="0.01" placeholder="0.04" oninput="calc()"></td>
+      <td><input type="number" id="a_raise" step="0.01" placeholder="0.06" oninput="calc()"></td>
+      <td><input type="number" id="b_raise" step="0.01" placeholder="0.05" oninput="calc()"></td></tr>
+  </table>
+
+  <div style="background:var(--lgold);border-radius:12px;padding:14px 20px;margin-top:20px">
+    <strong>💡 Pro tip:</strong> Enter % values as decimals (15% → 0.15). All other tabs update in real time as you type.
+    <div style="margin-top:8px">→ Click <strong>💰 Total Comp</strong> to see year-1 breakdown &nbsp;·&nbsp; <strong>📈 3-Year ROI</strong> for long-term earnings &nbsp;·&nbsp; <strong>🏆 Career Score</strong> to weigh non-financial factors &nbsp;·&nbsp; <strong>🎯 Dashboard</strong> for your verdict.</div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 2: TOTAL COMP ══════════════════ -->
+<div id="tab-comp" class="tab-pane">
+  <p class="section-intro">Risk-adjusted total compensation — every component that makes up the true annual value of each role.</p>
+
+  <!-- Top cards -->
+  <div class="comp-cards">
+    <div class="comp-card card-cur" id="card_cur">
+      <div class="role-name" id="card_cur_name">Current Role</div>
+      <div class="amount" id="card_cur_val">—</div>
+      <div class="sub-amount">Ongoing annual comp</div>
+    </div>
+    <div class="comp-card card-a" id="card_a">
+      <div class="role-name" id="card_a_name">Offer A</div>
+      <div class="amount" id="card_a_val">—</div>
+      <div class="sub-amount">Ongoing annual comp</div>
+    </div>
+    <div class="comp-card card-b" id="card_b">
+      <div class="role-name" id="card_b_name">Offer B</div>
+      <div class="amount" id="card_b_val">—</div>
+      <div class="sub-amount">Ongoing annual comp</div>
+    </div>
+  </div>
+
+  <!-- Breakdown table -->
+  <div class="sec-hdr">▸ FULL COMP BREAKDOWN</div>
+  <table class="res-table">
+    <tr><th class="h-lbl">Component</th><th class="h-cur" id="th_cur">Current Role</th><th class="h-a" id="th_a">Offer A</th><th class="h-b" id="th_b">Offer B</th></tr>
+    <tr><td class="lbl">Base Salary</td><td id="r_cur_base">—</td><td id="r_a_base">—</td><td id="r_b_base">—</td></tr>
+    <tr><td class="lbl">Expected Bonus (Risk-Adjusted)</td><td id="r_cur_bon">—</td><td id="r_a_bon">—</td><td id="r_b_bon">—</td></tr>
+    <tr><td class="lbl">Annual Equity Value (Risk-Adjusted)</td><td id="r_cur_eq">—</td><td id="r_a_eq">—</td><td id="r_b_eq">—</td></tr>
+    <tr><td class="lbl">401k / Pension Match</td><td id="r_cur_401">—</td><td id="r_a_401">—</td><td id="r_b_401">—</td></tr>
+    <tr><td class="lbl">Health Premium Cost (annual, negative)</td><td id="r_cur_health">—</td><td id="r_a_health">—</td><td id="r_b_health">—</td></tr>
+    <tr><td class="lbl">PTO Monetary Value</td><td id="r_cur_pto">—</td><td id="r_a_pto">—</td><td id="r_b_pto">—</td></tr>
+    <tr><td class="lbl">L&amp;D Training Budget</td><td id="r_cur_ld">—</td><td id="r_a_ld">—</td><td id="r_b_ld">—</td></tr>
+    <tr class="total-row"><td class="lbl">▶ TOTAL YEAR 1 (incl. signing)</td><td id="r_cur_y1">—</td><td id="r_a_y1">—</td><td id="r_b_y1">—</td></tr>
+    <tr class="total-row"><td class="lbl">▶ TOTAL ONGOING (excl. signing)</td><td id="r_cur_on">—</td><td id="r_a_on">—</td><td id="r_b_on">—</td></tr>
+  </table>
+
+  <!-- Delta table -->
+  <div class="sec-hdr" style="margin-top:28px">▸ COMPARISON vs CURRENT ROLE</div>
+  <table class="res-table">
+    <tr><th class="h-lbl">Metric</th><th class="h-cur">Current Role</th><th class="h-a" id="th_a2">Offer A</th><th class="h-b" id="th_b2">Offer B</th></tr>
+    <tr><td class="lbl">Year 1 Delta ($)</td><td>Baseline</td><td id="d_a_y1">—</td><td id="d_b_y1">—</td></tr>
+    <tr><td class="lbl">Ongoing Delta ($)</td><td>Baseline</td><td id="d_a_on">—</td><td id="d_b_on">—</td></tr>
+    <tr><td class="lbl">Ongoing Delta (%)</td><td>Baseline</td><td id="d_a_pct">—</td><td id="d_b_pct">—</td></tr>
+  </table>
+
+  <!-- 30% Rule -->
+  <div style="margin-top:22px;display:flex;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;background:var(--lgray);border-radius:14px;padding:18px 22px">
+      <strong style="color:var(--navy)">⚖️ 30% Rule — Offer A</strong><br>
+      <small style="color:var(--mgray)">A lateral move should deliver ≥30% combined improvement to justify the risk.</small><br>
+      <span class="rule30-badge" id="rule30_a">Enter data</span>
+    </div>
+    <div style="flex:1;background:var(--lgray);border-radius:14px;padding:18px 22px">
+      <strong style="color:var(--navy)">⚖️ 30% Rule — Offer B</strong><br>
+      <small style="color:var(--mgray)">A lateral move should deliver ≥30% combined improvement to justify the risk.</small><br>
+      <span class="rule30-badge" id="rule30_b">Enter data</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 3: 3-YEAR PROJECTOR ══════════════════ -->
+<div id="tab-projector" class="tab-pane">
+  <p class="section-intro">Annual raises compounded over 3 years — see the true long-term cost or gain of each career decision.</p>
+
+  <!-- 3-year cards -->
+  <div class="comp-cards">
+    <div class="comp-card card-cur"><div class="role-name">Current Role — 3 Yrs</div><div class="amount" id="p_cur_3yr">—</div><div class="sub-amount">Cumulative earnings</div></div>
+    <div class="comp-card card-a" id="p_card_a"><div class="role-name">Offer A — 3 Yrs</div><div class="amount" id="p_a_3yr">—</div><div class="sub-amount">Cumulative earnings</div></div>
+    <div class="comp-card card-b" id="p_card_b"><div class="role-name">Offer B — 3 Yrs</div><div class="amount" id="p_b_3yr">—</div><div class="sub-amount">Cumulative earnings</div></div>
+  </div>
+
+  <!-- Year tables -->
+  <div id="proj-year-tables"></div>
+
+  <!-- Cumulative summary -->
+  <div class="sec-hdr" style="margin-top:28px">▸ CUMULATIVE SUMMARY & OPPORTUNITY COST</div>
+  <table class="res-table">
+    <tr><th class="h-lbl">Metric</th><th class="h-cur">Current Role</th><th class="h-a">Offer A</th><th class="h-b">Offer B</th></tr>
+    <tr class="total-row"><td class="lbl">3-Year Cumulative Earnings</td><td id="sum_cur">—</td><td id="sum_a">—</td><td id="sum_b">—</td></tr>
+    <tr><td class="lbl">3-Year $ Delta vs Current</td><td>Baseline</td><td id="sum_da">—</td><td id="sum_db">—</td></tr>
+    <tr><td class="lbl">3-Year % Delta vs Current</td><td>Baseline</td><td id="sum_pa">—</td><td id="sum_pb">—</td></tr>
+    <tr class="total-row"><td class="lbl">💡 Opportunity Cost of Staying (max offer vs current)</td><td id="opp_cost" colspan="3" style="text-align:left;padding-left:18px">—</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════ TAB 4: SCORECARD ══════════════════ -->
+<div id="tab-scorecard" class="tab-pane">
+  <p class="section-intro">Score each role 1–10 across 10 career quality criteria. Adjust the weights to reflect what matters most to you right now. Weights must total 100%.</p>
+  <div class="wt-warn" id="wt_warn">⚠️ Weights currently total <span id="wt_sum_show"></span>% — please adjust to exactly 100% for accurate scores.</div>
+
+  <div class="score-grid">
+    <div class="score-hdr h-crit">Criteria</div>
+    <div class="score-hdr h-wt">Weight %</div>
+    <div class="score-hdr h-cur">Current<br>Score (1-10)</div>
+    <div class="score-hdr h-a">Offer A<br>Score (1-10)</div>
+    <div class="score-hdr h-b">Offer B<br>Score (1-10)</div>
+    <div class="score-hdr h-wcur">Current<br>Weighted</div>
+    <div class="score-hdr h-wa">Offer A<br>Weighted</div>
+    <div class="score-hdr h-wb">Offer B<br>Weighted</div>
+  </div>
+
+  <div id="scorecard-rows"></div>
+
+  <div class="score-total-row">
+    <div class="score-total-lbl">TOTAL SCORE (out of 100)</div>
+    <div class="score-total-blank"></div>
+    <div class="score-total-blank"></div>
+    <div class="score-total-blank"></div>
+    <div class="score-total-blank"></div>
+    <div class="score-total-val stv-cur" id="sc_tot_cur">—</div>
+    <div class="score-total-val stv-a" id="sc_tot_a">—</div>
+    <div class="score-total-val stv-b" id="sc_tot_b">—</div>
+  </div>
+
+  <div style="margin-top:20px;background:var(--lgold);border-radius:12px;padding:14px 20px">
+    <strong>🏆 Career Quality Winner:</strong> <span id="sc_winner" style="font-weight:900;color:var(--navy)">Enter scores to see winner</span>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 5: DASHBOARD ══════════════════ -->
+<div id="tab-dashboard" class="tab-pane">
+  <p class="section-intro">Your complete decision view. Fill in all tabs first for the most accurate recommendation.</p>
+
+  <!-- Final recommendation -->
+  <div class="rec-box rec-mixed" id="rec_box">
+    <div class="rec-title">🎯 Final Recommendation</div>
+    <div class="rec-verdict" id="rec_verdict">Fill in your inputs and career scores to see your personalized recommendation.</div>
+  </div>
+
+  <div class="dash-grid">
+    <!-- Comp snapshot -->
+    <div class="dash-card">
+      <h3>💰 Compensation Snapshot</h3>
+      <table class="dash-table">
+        <tr><td></td><td id="dsh_cur_name" style="color:var(--dgray)">Current</td><td id="dsh_a_name" style="color:var(--teal)">Offer A</td><td id="dsh_b_name" style="color:var(--orange)">Offer B</td></tr>
+        <tr><td>True Annual Comp</td><td id="dsh_cur_on">—</td><td id="dsh_a_on">—</td><td id="dsh_b_on">—</td></tr>
+        <tr><td>Year 1 (incl. signing)</td><td id="dsh_cur_y1">—</td><td id="dsh_a_y1">—</td><td id="dsh_b_y1">—</td></tr>
+        <tr><td>3-Year Cumulative</td><td id="dsh_cur_3yr">—</td><td id="dsh_a_3yr">—</td><td id="dsh_b_3yr">—</td></tr>
+        <tr><td>3-Yr Delta vs Current</td><td>Baseline</td><td id="dsh_a_delta">—</td><td id="dsh_b_delta">—</td></tr>
+      </table>
+    </div>
+    <!-- Career score -->
+    <div class="dash-card">
+      <h3>🏆 Career Quality Scores</h3>
+      <table class="dash-table">
+        <tr><td></td><td style="color:var(--dgray)">Current</td><td style="color:var(--teal)">Offer A</td><td style="color:var(--orange)">Offer B</td></tr>
+        <tr><td>Score (out of 100)</td><td id="dsh_sc_cur">—</td><td id="dsh_sc_a">—</td><td id="dsh_sc_b">—</td></tr>
+        <tr><td>🏆 Winner</td><td id="dsh_sc_winner" colspan="3" style="text-align:left">—</td></tr>
+      </table>
+    </div>
+    <!-- 30% rule -->
+    <div class="dash-card">
+      <h3>⚖️ 30% Rule Check</h3>
+      <table class="dash-table">
+        <tr><td>Offer A comp delta</td><td id="dsh_30a_pct">—</td><td id="dsh_30a_status">—</td></tr>
+        <tr><td>Offer B comp delta</td><td id="dsh_30b_pct">—</td><td id="dsh_30b_status">—</td></tr>
+      </table>
+    </div>
+    <!-- Opportunity cost -->
+    <div class="dash-card">
+      <h3>💡 Opportunity Cost</h3>
+      <table class="dash-table">
+        <tr><td>Staying 3 yrs costs you</td><td id="dsh_opp" colspan="2">—</td></tr>
+        <tr><td>Best comp offer</td><td id="dsh_best_comp" colspan="2">—</td></tr>
+        <tr><td>Best career score</td><td id="dsh_best_score" colspan="2">—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Smart flags -->
+  <div class="sec-hdr">▸ SMART TRADE-OFF FLAGS</div>
+  <div id="flags_container">
+    <div class="flag-box flag-blue"><span class="flag-icon">💰</span><div class="flag-text"><strong>Compensation</strong><p id="flag_comp">Enter data to see flags.</p></div></div>
+    <div class="flag-box flag-gold"><span class="flag-icon">🏆</span><div class="flag-text"><strong>Career Quality</strong><p id="flag_career">Enter scores in the Career Score tab.</p></div></div>
+    <div class="flag-box flag-green"><span class="flag-icon">⚖️</span><div class="flag-text"><strong>Comp vs Career Conflict?</strong><p id="flag_conflict">Awaiting data.</p></div></div>
+    <div class="flag-box flag-red"><span class="flag-icon">📅</span><div class="flag-text"><strong>Opportunity Cost</strong><p id="flag_opp">Awaiting data.</p></div></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER CTA -->
+<div class="nl-cta">
+  <h2>Want the verified $50K–$250K remote marketing jobs?</h2>
+  <p>Join 1,800+ marketing professionals getting weekly curated roles + exclusive career intelligence like this tool — free.</p>
+  <a href="https://www.marketersremote.com" class="btn-primary" target="_blank" rel="noopener" style="text-decoration:none">📩 Join Newsletter Free</a>
+  <p class="proof">✅ No spam · Weekly only · Unsubscribe anytime</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="https://marketersremote.github.io/">Home</a>
+  <a href="https://marketersremote.github.io/fcmo-scorecard/">FCMO Scorecard</a>
+  <a href="https://www.marketersremote.com" target="_blank" rel="noopener">Subscribe</a>
+  <br><br>© 2026 MarketersRemote.com · Built for marketing professionals
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── SCORECARD CRITERIA ──────────────────────────────────────────────────────
+const CRITERIA = [
+  {label:"Total Compensation & Benefits",      wt:20},
+  {label:"3-Year Earnings Growth Potential",   wt:15},
+  {label:"Brand / Resume Credential Value",    wt:10},
+  {label:"Learning & Skill Development",       wt:15},
+  {label:"Career Advancement Speed",           wt:10},
+  {label:"Job Security & Stability",           wt:10},
+  {label:"Quality of Manager / Mentorship",    wt:10},
+  {label:"Autonomy & Creative Ownership",      wt:5},
+  {label:"Work-Life Balance",                  wt:3},
+  {label:"Mission & Culture Fit",              wt:2}
+];
+
+// ── BUILD SCORECARD ROWS ────────────────────────────────────────────────────
+const scContainer = document.getElementById('scorecard-rows');
+CRITERIA.forEach((c,i) => {
+  const row = document.createElement('div');
+  row.className = 'score-grid';
+  row.style.marginBottom = '6px';
+  row.innerHTML = `
+    <div class="score-label">${c.label}</div>
+    <div class="score-wt"><input type="number" id="sw_${i}" value="${c.wt}" min="0" max="100" step="1" oninput="calc()"></div>
+    <div class="score-sc"><input type="number" id="sc_cur_${i}" min="1" max="10" placeholder="—" oninput="calc()"></div>
+    <div class="score-sc"><input type="number" id="sc_a_${i}" min="1" max="10" placeholder="—" oninput="calc()"></div>
+    <div class="score-sc"><input type="number" id="sc_b_${i}" min="1" max="10" placeholder="—" oninput="calc()"></div>
+    <div class="score-calc sc-cur" id="wsc_cur_${i}">—</div>
+    <div class="score-calc sc-a" id="wsc_a_${i}">—</div>
+    <div class="score-calc sc-b" id="wsc_b_${i}">—</div>
+  `;
+  scContainer.appendChild(row);
+});
+
+// ── HELPERS ─────────────────────────────────────────────────────────────────
+const g  = id => parseFloat(document.getElementById(id)?.value) || 0;
+const gs = id => document.getElementById(id)?.value || '';
+const fmt = n => {
+  if(!n && n!==0) return '—';
+  const abs = Math.abs(n);
+  const s = abs >= 1e6 ? (abs/1e6).toFixed(2)+'M' : abs.toLocaleString('en-US',{maximumFractionDigits:0});
+  return (n<0?'-$':'$') + s;
+};
+const fmtPct = n => (n*100).toFixed(1)+'%';
+const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+const best3 = (a,b,c) => {
+  const mx = Math.max(a,b,c);
+  return {cur:a===mx&&mx>0,a:b===mx&&mx>0,b:c===mx&&mx>0};
+};
+const colorSet = (id, val, isGood) => {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.remove('best-val','worst-val');
+  if(isGood) el.classList.add('best-val');
+};
+
+function compRow(r) {
+  // r = {base, bpct, blike, sign, eq, vest, elike, health, m401, pto, ld}
+  const bonus   = r.base * r.bpct * r.blike;
+  const equity  = r.vest > 0 ? (r.eq / r.vest) * r.elike : 0;
+  const match   = r.base * r.m401;
+  const healthA = r.health * 12 * -1;
+  const ptoVal  = r.base > 0 ? (r.base / 260) * r.pto : 0;
+  const ongoing = r.base + bonus + equity + match + healthA + ptoVal + r.ld;
+  const y1      = ongoing + r.sign;
+  return { base:r.base, bonus, equity, match, healthA, ptoVal, ld:r.ld, ongoing, y1 };
+}
+
+function projYear(base, raise, bpct, blike, eq, vest, elike, health, m401, pto, ld) {
+  const b  = base * (1 + raise);
+  const bon = b * bpct * blike;
+  const eqV = vest > 0 ? (eq / vest) * elike : 0;
+  const mat = b * m401;
+  const hlth = health * 12 * -1;
+  const ptoV = b > 0 ? (b / 260) * pto : 0;
+  return { base: b, total: b + bon + eqV + mat + hlth + ptoV + ld };
+}
+
+function getRoles() {
+  return ['cur','a','b'].map(k => ({
+    base:   g(`${k}_base`),
+    bpct:   g(`${k}_bpct`),
+    blike:  g(`${k}_blike`),
+    sign:   g(`${k}_sign`),
+    eq:     g(`${k}_eq`),
+    vest:   g(`${k}_vest`) || 4,
+    elike:  g(`${k}_elike`),
+    health: g(`${k}_health`),
+    m401:   g(`${k}_401`),
+    pto:    g(`${k}_pto`),
+    ld:     g(`${k}_ld`),
+    raise:  g(`${k}_raise`),
+    co:     gs(`${k}_co`),
+    title:  gs(`${k}_title`)
+  }));
+}
+
+// ── MAIN CALC ───────────────────────────────────────────────────────────────
+function calc() {
+  const [cur, a, b] = getRoles();
+  const cc = compRow(cur), ca = compRow(a), cb = compRow(b);
+
+  // Names
+  const names = [
+    cur.co || 'Current Role',
+    a.co || 'Offer A',
+    b.co || 'Offer B'
+  ];
+
+  // Update column headers
+  ['th_cur','th_a','th_b'].forEach((id,i) => set(id, names[i]));
+  ['th_a2','th_b2'].forEach((id,i) => set(id, names[i+1]));
+  set('card_cur_name', names[0]);
+  set('card_a_name', names[1]);
+  set('card_b_name', names[2]);
+
+  // ── TOTAL COMP TAB ──────────────────────────────────────────────────────
+  set('r_cur_base',   fmt(cc.base));   set('r_a_base',   fmt(ca.base));   set('r_b_base',   fmt(cb.base));
+  set('r_cur_bon',    fmt(cc.bonus));  set('r_a_bon',    fmt(ca.bonus));  set('r_b_bon',    fmt(cb.bonus));
+  set('r_cur_eq',     fmt(cc.equity)); set('r_a_eq',     fmt(ca.equity)); set('r_b_eq',     fmt(cb.equity));
+  set('r_cur_401',    fmt(cc.match));  set('r_a_401',    fmt(ca.match));  set('r_b_401',    fmt(cb.match));
+  set('r_cur_health', fmt(cc.healthA));set('r_a_health', fmt(ca.healthA));set('r_b_health', fmt(cb.healthA));
+  set('r_cur_pto',    fmt(cc.ptoVal)); set('r_a_pto',    fmt(ca.ptoVal)); set('r_b_pto',    fmt(cb.ptoVal));
+  set('r_cur_ld',     fmt(cc.ld));     set('r_a_ld',     fmt(ca.ld));     set('r_b_ld',     fmt(cb.ld));
+  set('r_cur_y1',     fmt(cc.y1));     set('r_a_y1',     fmt(ca.y1));     set('r_b_y1',     fmt(cb.y1));
+  set('r_cur_on',     fmt(cc.ongoing));set('r_a_on',     fmt(ca.ongoing));set('r_b_on',     fmt(cb.ongoing));
+
+  // Cards
+  set('card_cur_val', cc.ongoing > 0 ? fmt(cc.ongoing) : '—');
+  set('card_a_val',   ca.ongoing > 0 ? fmt(ca.ongoing) : '—');
+  set('card_b_val',   cb.ongoing > 0 ? fmt(cb.ongoing) : '—');
+
+  // Highlight winner cards
+  const compBest = best3(cc.ongoing, ca.ongoing, cb.ongoing);
+  document.getElementById('card_cur').classList.toggle('card-winner', compBest.cur);
+  document.getElementById('card_a').classList.toggle('card-winner',   compBest.a);
+  document.getElementById('card_b').classList.toggle('card-winner',   compBest.b);
+
+  // Deltas
+  const da_y1  = ca.y1 - cc.y1;
+  const db_y1  = cb.y1 - cc.y1;
+  const da_on  = ca.ongoing - cc.ongoing;
+  const db_on  = cb.ongoing - cc.ongoing;
+  const da_pct = cc.ongoing !== 0 ? da_on / cc.ongoing : 0;
+  const db_pct = cc.ongoing !== 0 ? db_on / cc.ongoing : 0;
+
+  set('d_a_y1',  cc.y1 > 0 ? fmt(da_y1) : '—');
+  set('d_b_y1',  cc.y1 > 0 ? fmt(db_y1) : '—');
+  set('d_a_on',  cc.ongoing > 0 ? fmt(da_on) : '—');
+  set('d_b_on',  cc.ongoing > 0 ? fmt(db_on) : '—');
+  set('d_a_pct', cc.ongoing > 0 ? fmtPct(da_pct) : '—');
+  set('d_b_pct', cc.ongoing > 0 ? fmtPct(db_pct) : '—');
+
+  // 30% rule
+  const rule30 = (pct) => {
+    if(!cc.ongoing) return ['rule30-no','Enter current role data'];
+    if(pct >= 0.30) return ['rule30-yes','✅ Meets 30% threshold'];
+    if(pct > 0)     return ['rule30-no', `⚠️ Only ${fmtPct(pct)} gain — below 30% threshold`];
+    if(pct < 0)     return ['rule30-no', `🔴 ${fmtPct(Math.abs(pct))} pay cut`];
+    return ['rule30-no','No change in comp'];
+  };
+  const [rca_cls, rca_txt] = rule30(da_pct);
+  const [rcb_cls, rcb_txt] = rule30(db_pct);
+  const r30a = document.getElementById('rule30_a');
+  const r30b = document.getElementById('rule30_b');
+  r30a.className = 'rule30-badge ' + rca_cls; r30a.textContent = rca_txt;
+  r30b.className = 'rule30-badge ' + rcb_cls; r30b.textContent = rcb_txt;
+
+  // ── 3-YEAR PROJECTOR ────────────────────────────────────────────────────
+  const roles3 = [cur, a, b];
+  const y1r = roles3.map(r => projYear(r.base, r.raise, r.bpct, r.blike, r.eq, r.vest, r.elike, r.health, r.m401, r.pto, r.ld));
+  const y2r = roles3.map((r, i) => projYear(y1r[i].base, r.raise, r.bpct, r.blike, r.eq, r.vest, r.elike, r.health, r.m401, r.pto, r.ld));
+  const y3r = roles3.map((r, i) => projYear(y2r[i].base, r.raise, r.bpct, r.blike, r.eq, r.vest, r.elike, r.health, r.m401, r.pto, r.ld));
+  const cum = roles3.map((r, i) => y1r[i].total + y2r[i].total + y3r[i].total);
+
+  // Year tables
+  const yt = document.getElementById('proj-year-tables');
+  yt.innerHTML = '';
+  ['Year 1','Year 2','Year 3'].forEach((yr, yi) => {
+    const ydata = [y1r, y2r, y3r][yi];
+    const hc = ['h-cur','h-a','h-b'];
+    const ids = [0,1,2];
+    yt.innerHTML += `
+      <div class="sec-hdr" style="margin-top:${yi>0?'28px':'0'}">▸ ${yr.toUpperCase()}</div>
+      <table class="res-table">
+        <tr><th class="h-lbl">Component</th>
+          <th class="${hc[0]}">${names[0]}</th>
+          <th class="${hc[1]}">${names[1]}</th>
+          <th class="${hc[2]}">${names[2]}</th></tr>
+        <tr><td class="lbl">Base After Raise</td>${ids.map(i=>
+          `<td>${ydata[i].base>0?fmt(ydata[i].base):'—'}</td>`).join('')}</tr>
+        <tr class="total-row"><td class="lbl">Total Comp ${yr}</td>${ids.map(i=>
+          `<td>${ydata[i].total>0?fmt(ydata[i].total):'—'}</td>`).join('')}</tr>
+      </table>`;
+  });
+
+  // Cumulative
+  set('p_cur_3yr', cum[0] > 0 ? fmt(cum[0]) : '—');
+  set('p_a_3yr',   cum[1] > 0 ? fmt(cum[1]) : '—');
+  set('p_b_3yr',   cum[2] > 0 ? fmt(cum[2]) : '—');
+
+  const projBest = best3(cum[0], cum[1], cum[2]);
+  document.getElementById('p_card_a').classList.toggle('card-winner', projBest.a);
+  document.getElementById('p_card_b').classList.toggle('card-winner', projBest.b);
+
+  const sum_da = cum[1] - cum[0];
+  const sum_db = cum[2] - cum[0];
+  set('sum_cur', cum[0] > 0 ? fmt(cum[0]) : '—');
+  set('sum_a',   cum[1] > 0 ? fmt(cum[1]) : '—');
+  set('sum_b',   cum[2] > 0 ? fmt(cum[2]) : '—');
+  set('sum_da',  cum[0] > 0 ? fmt(sum_da) : '—');
+  set('sum_db',  cum[0] > 0 ? fmt(sum_db) : '—');
+  set('sum_pa',  cum[0] > 0 ? fmtPct(sum_da/cum[0]) : '—');
+  set('sum_pb',  cum[0] > 0 ? fmtPct(sum_db/cum[0]) : '—');
+
+  const oppCost = Math.max(cum[1], cum[2]) - cum[0];
+  const oppEl = document.getElementById('opp_cost');
+  if(cum[0] > 0 && oppCost > 0) {
+    oppEl.innerHTML = `<strong style="color:var(--red)">By staying, you may leave ${fmt(oppCost)} on the table over 3 years.</strong>`;
+  } else if(cum[0] > 0) {
+    oppEl.innerHTML = `<strong style="color:var(--green)">✅ Your current role is the top earner over 3 years.</strong>`;
+  } else { oppEl.textContent = '—'; }
+
+  // ── SCORECARD ───────────────────────────────────────────────────────────
+  let wtSum = 0, scTot = [0,0,0];
+  CRITERIA.forEach((_, i) => {
+    const wt  = g(`sw_${i}`) / 100;
+    const scs = [g(`sc_cur_${i}`), g(`sc_a_${i}`), g(`sc_b_${i}`)];
+    wtSum += wt * 100;
+    scs.forEach((sc, j) => {
+      const weighted = sc > 0 ? (wt * sc * 10) : 0;
+      scTot[j] += weighted;
+      const el = document.getElementById(['wsc_cur_','wsc_a_','wsc_b_'][j] + i);
+      if(el) el.textContent = sc > 0 ? weighted.toFixed(1) : '—';
+    });
+  });
+
+  const wtWarn = document.getElementById('wt_warn');
+  const wtOk = Math.abs(wtSum - 100) < 0.5;
+  wtWarn.style.display = wtOk ? 'none' : 'block';
+  set('wt_sum_show', Math.round(wtSum));
+
+  const scFmt = v => v > 0 ? v.toFixed(1) : '—';
+  set('sc_tot_cur', scFmt(scTot[0]));
+  set('sc_tot_a',   scFmt(scTot[1]));
+  set('sc_tot_b',   scFmt(scTot[2]));
+
+  const scBest = best3(scTot[0], scTot[1], scTot[2]);
+  const scWinnerName = scBest.cur ? names[0] : scBest.a ? names[1] : scBest.b ? names[2] : null;
+  set('sc_winner', scWinnerName ? '🏆 ' + scWinnerName : 'Enter scores in all rows');
+
+  // ── DASHBOARD ───────────────────────────────────────────────────────────
+  set('dsh_cur_name', names[0]); set('dsh_a_name', names[1]); set('dsh_b_name', names[2]);
+  set('dsh_cur_on',  fmt(cc.ongoing)); set('dsh_a_on',  fmt(ca.ongoing)); set('dsh_b_on',  fmt(cb.ongoing));
+  set('dsh_cur_y1',  fmt(cc.y1));      set('dsh_a_y1',  fmt(ca.y1));      set('dsh_b_y1',  fmt(cb.y1));
+  set('dsh_cur_3yr', fmt(cum[0]));     set('dsh_a_3yr', fmt(cum[1]));     set('dsh_b_3yr', fmt(cum[2]));
+  set('dsh_a_delta', cum[0]>0 ? fmt(sum_da) : '—');
+  set('dsh_b_delta', cum[0]>0 ? fmt(sum_db) : '—');
+  set('dsh_sc_cur',  scFmt(scTot[0])); set('dsh_sc_a', scFmt(scTot[1])); set('dsh_sc_b', scFmt(scTot[2]));
+  set('dsh_sc_winner', scWinnerName || '—');
+
+  set('dsh_30a_pct',    cc.ongoing > 0 ? fmtPct(da_pct) : '—');
+  set('dsh_30a_status', cc.ongoing > 0 ? (da_pct >= 0.3 ? '✅ Meets 30%' : '⚠️ Below 30%') : '—');
+  set('dsh_30b_pct',    cc.ongoing > 0 ? fmtPct(db_pct) : '—');
+  set('dsh_30b_status', cc.ongoing > 0 ? (db_pct >= 0.3 ? '✅ Meets 30%' : '⚠️ Below 30%') : '—');
+
+  const bestCompName = cc.ongoing >= ca.ongoing && cc.ongoing >= cb.ongoing ? names[0] :
+                       ca.ongoing >= cb.ongoing ? names[1] : names[2];
+  const bestScName = scTot[0] >= scTot[1] && scTot[0] >= scTot[2] ? names[0] :
+                     scTot[1] >= scTot[2] ? names[1] : names[2];
+  set('dsh_best_comp',  cc.ongoing > 0 ? bestCompName : '—');
+  set('dsh_best_score', scTot[0]+scTot[1]+scTot[2] > 0 ? bestScName : '—');
+  set('dsh_opp', cum[0] > 0 && oppCost > 0 ? fmt(oppCost) + ' over 3 yrs' :
+                 cum[0] > 0 ? 'Current role is top earner' : '—');
+
+  // Smart flags
+  if(cc.ongoing > 0 && (ca.ongoing > 0 || cb.ongoing > 0)) {
+    set('flag_comp', `${bestCompName} pays the most in ongoing annual comp. Highest ongoing: ${fmt(Math.max(cc.ongoing,ca.ongoing,cb.ongoing))}/yr.`);
+  } else { set('flag_comp','Enter compensation data to see this flag.'); }
+
+  if(scTot[0]+scTot[1]+scTot[2] > 0) {
+    set('flag_career', `${bestScName} scores highest on career quality: ${scFmt(Math.max(...scTot))}/100.`);
+  } else { set('flag_career','Enter scores in the Career Score tab to see this flag.'); }
+
+  const compWinIsA = ca.ongoing > cc.ongoing && ca.ongoing >= cb.ongoing;
+  const compWinIsB = cb.ongoing > cc.ongoing && cb.ongoing > ca.ongoing;
+  const compWinIsCur = cc.ongoing >= ca.ongoing && cc.ongoing >= cb.ongoing;
+  const scoreWinIsA = scTot[1] > scTot[0] && scTot[1] >= scTot[2];
+  const scoreWinIsB = scTot[2] > scTot[0] && scTot[2] > scTot[1];
+  const scoreWinIsCur = scTot[0] >= scTot[1] && scTot[0] >= scTot[2];
+  const conflict = cc.ongoing > 0 && scTot[0]+scTot[1]+scTot[2] > 0 && bestCompName !== bestScName;
+
+  if(cc.ongoing > 0 && scTot[0]+scTot[1]+scTot[2] > 0) {
+    set('flag_conflict', conflict
+      ? `⚠️ Split decision: ${bestCompName} pays more but ${bestScName} scores better on career quality. Revisit your Scorecard weights to reflect your priorities.`
+      : `✅ Both comp and career quality point to the same option: ${bestCompName}. Clean signal.`);
+  } else { set('flag_conflict','Enter both comp and scorecard data to see this flag.'); }
+
+  if(cum[0] > 0 && oppCost > 0) {
+    set('flag_opp', `By staying in your current role, you may leave ${fmt(oppCost)} on the table over 3 years compared to the best offer.`);
+  } else if(cum[0] > 0) {
+    set('flag_opp','✅ Your current role is actually the top cumulative earner over 3 years.');
+  } else { set('flag_opp','Enter data to calculate opportunity cost.'); }
+
+  // ── FINAL RECOMMENDATION ────────────────────────────────────────────────
+  const hasComp  = cc.ongoing > 0;
+  const hasScore = scTot[0]+scTot[1]+scTot[2] > 0;
+  const box = document.getElementById('rec_box');
+  let recClass = 'rec-mixed', recText = '';
+
+  if(hasComp && hasScore) {
+    if((compWinIsCur || !ca.ongoing && !cb.ongoing) && (scoreWinIsCur)) {
+      recClass = 'rec-stay';
+      recText  = `🏆 STAY AT ${names[0].toUpperCase()}. Your current role wins on both total compensation and career quality score. Use these offers as leverage to negotiate a raise or title upgrade.`;
+    } else if(compWinIsA && scoreWinIsA) {
+      recClass = 'rec-offa';
+      recText  = `🏆 TAKE ${names[1].toUpperCase()}. It leads on both total compensation (${fmt(ca.ongoing)}/yr) and career quality score (${scFmt(scTot[1])}/100). Strong signal.`;
+    } else if(compWinIsB && scoreWinIsB) {
+      recClass = 'rec-offb';
+      recText  = `🏆 TAKE ${names[2].toUpperCase()}. It leads on both total compensation (${fmt(cb.ongoing)}/yr) and career quality score (${scFmt(scTot[2])}/100). Strong signal.`;
+    } else {
+      recClass = 'rec-mixed';
+      recText  = `⚖️ MIXED SIGNALS. ${bestCompName} pays the most, but ${bestScName} scores higher on career quality. Return to the Career Score tab, adjust your weights to reflect what matters most right now, and re-evaluate.`;
+    }
+  } else if(hasComp) {
+    recText = `📊 Compensation data loaded. ${bestCompName} has the highest comp (${fmt(Math.max(cc.ongoing,ca.ongoing,cb.ongoing))}/yr). Add career scores in the 🏆 Career Score tab for your full recommendation.`;
+  } else {
+    recText = 'Fill in the 📥 Inputs tab to generate your personalized recommendation.';
+  }
+
+  box.className = 'rec-box ' + recClass;
+  set('rec_verdict', recText);
+}
+
+// ── TAB SWITCHER ────────────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+// Init
+calc();
+</script>
+</body>
+</html>
