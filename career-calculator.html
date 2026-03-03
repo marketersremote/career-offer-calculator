@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Offer Calculator • MarketersRemote.com</title>
+    <meta name="description" content="Compare job offers with our free Career Offer Calculator. See true total comp, 3-year ROI, and career quality scores for marketing professionals. Trusted by 1,800+ marketers.">
+    <meta name="keywords" content="job offer calculator, career calculator, total compensation calculator, marketing salary calculator, job offer comparison tool">
+
+    <!-- SEO Open Graph -->
+    <meta property="og:title" content="Career Offer Calculator - MarketersRemote.com">
+    <meta property="og:description" content="Free tool to compare job offers: true comp, 3-year ROI, career quality. For marketing pros making $50K-$250K.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://marketersremote.github.io/career-calculator">
+    <meta property="og:image" content="https://marketersremote.com/og-career-calculator.jpg">
+
+    <!-- Schema.org for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Career Offer Calculator",
+        "description": "Free job offer comparison tool for marketing professionals",
+        "url": "https://marketersremote.github.io/career-calculator",
+        "provider": {
+            "@type": "Organization",
+            "name": "MarketersRemote.com",
+            "url": "https://marketersremote.com"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --navy: #0D1B2A;
+            --teal: #0077B6;
+            --gold: #F4A300;
+            --light-teal: #90E0EF;
+            --light-gold: #FFF3CD;
+            --dark-gray: #343A40;
+            --mid-gray: #6C757D;
+            --light-gray: #F8F9FA;
+            --green: #198754;
+            --red: #DC3545;
+            --orange: #FD7E14;
+            --white: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; color: var(--dark-gray); background: linear-gradient(135deg, var(--light-gray) 0%, #f0f4f8 100%);
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .header { 
+            background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 50%); 
+            color: white; 
+            padding: 40px 0; 
+            text-align: center; 
+            border-radius: 20px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 20px 40px rgba(13,27,42,0.2);
+        }
+        .header h1 { 
+            font-size: 2.8em; font-weight: 800; 
+            background: linear-gradient(45deg, var(--gold), #FFD700); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 10px; 
+        }
+        .header p { font-size: 1.3em; opacity: 0.95; margin-bottom: 15px; }
+        .cta-button { 
+            display: inline-block; background: var(--gold); color: var(--navy); 
+            padding: 18px 40px; font-size: 1.2em; font-weight: 700; 
+            border-radius: 50px; text-decoration: none; 
+            box-shadow: 0 10px 30px rgba(244,163,0,0.4); 
+            transition: all 0.3s ease; 
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(244,163,0,0.6); }
+
+        /* Tabs */
+        .tabs { 
+            display: flex; background: white; border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; 
+            margin-bottom: 30px; 
+        }
+        .tab-btn { 
+            flex: 1; padding: 20px; background: var(--light-gray); 
+            border: none; font-size: 1.1em; font-weight: 600; 
+            cursor: pointer; transition: all 0.3s; color: var(--mid-gray); 
+            position: relative; 
+        }
+        .tab-btn.active { 
+            background: var(--navy); color: var(--gold); 
+        }
+        .tab-btn.active::after { 
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; 
+            height: 4px; background: var(--gold); 
+        }
+        .tab-content { 
+            background: white; border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; 
+            display: none; 
+        }
+        .tab-content.active { display: block; }
+
+        /* Input sections */
+        .section { margin-bottom: 35px; }
+        .section-header { 
+            background: var(--navy); color: var(--gold); padding: 15px 25px; 
+            border-radius: 12px; font-size: 1.2em; font-weight: 700; 
+            margin-bottom: 20px; 
+        }
+        .input-grid { display: grid; grid-template-columns: 280px 1fr 1fr 1fr; gap: 15px; align-items: end; }
+        .input-grid.full { grid-template-columns: 1fr 1fr 1fr; }
+        .input-group { margin-bottom: 20px; }
+        .input-group:last-child { margin-bottom: 0; }
+        label { 
+            display: block; font-weight: 600; color: var(--dark-gray); 
+            margin-bottom: 8px; font-size: 0.95em; 
+        }
+        input[type="number"], input[type="text"], select { 
+            width: 100%; padding: 14px 16px; border: 2px solid var(--light-gold); 
+            border-radius: 10px; font-size: 1.1em; font-weight: 500; 
+            transition: all 0.3s; background: var(--light-gold); 
+        }
+        input[type="number"]:focus, input[type="text"]:focus, select:focus { 
+            outline: none; border-color: var(--gold); 
+            box-shadow: 0 0 0 4px rgba(244,163,0,0.1); 
+            background: white; 
+        }
+
+        /* Results */
+        .result-card { 
+            background: white; padding: 25px; border-radius: 15px; 
+            margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); 
+        }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .result-item { text-align: center; padding: 20px; border-radius: 12px; }
+        .result-best { 
+            background: linear-gradient(135deg, var(--green), #20c997); 
+            color: white; transform: scale(1.05); 
+        }
+        .result-current { background: var(--light-gray); }
+        .result-offer-a { background: linear-gradient(135deg, var(--teal), var(--light-teal)); color: white; }
+        .result-offer-b { background: linear-gradient(135deg, var(--orange), #ffe5b4); }
+        .result-number { font-size: 2.2em; font-weight: 800; margin: 10px 0; }
+        .result-label { font-size: 0.95em; opacity: 0.9; }
+
+        /* Final recommendation */
+        .recommendation { 
+            background: linear-gradient(135deg, var(--navy), var(--teal)); 
+            color: white; padding: 40px; border-radius: 20px; 
+            text-align: center; font-size: 1.4em; margin: 40px 0; 
+        }
+        .rec-stay { border-left: 8px solid var(--green); }
+        .rec-offer-a { border-left: 8px solid var(--teal); }
+        .rec-offer-b { border-left: 8px solid var(--orange); }
+        .rec-mixed { border-left: 8px solid var(--gold); }
+
+        /* Newsletter CTA */
+        .newsletter-cta { 
+            background: linear-gradient(135deg, var(--gold), #FFD700); 
+            color: var(--navy); padding: 40px; border-radius: 20px; 
+            text-align: center; margin: 50px 0; 
+        }
+        .newsletter-cta h2 { font-size: 2.2em; margin-bottom: 15px; }
+        .newsletter-cta p { font-size: 1.25em; margin-bottom: 25px; opacity: 0.95; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .input-grid { grid-template-columns: 1fr; gap: 10px; }
+            .result-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .tabs { flex-direction: column; }
+            .header h1 { font-size: 2.2em; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active, .result-card { animation: fadeInUp 0.5s ease; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Career Offer Calculator</h1>
+            <p>Compare any job offer in 60 seconds. True total comp, 3-year ROI, and career quality score.</p>
+            <p><strong>Trusted by 1,800+ marketing professionals</strong> making $50K–$250K</p>
+            <a href="#calculator" class="cta-button">🚀 Start Comparing Now</a>
+        </div>
+
+        <!-- Calculator -->
+        <div id="calculator">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('inputs')">📥 Inputs</button>
+                <button class="tab-btn" onclick="showTab('comp')">💰 Total Comp</button>
+                <button class="tab-btn" onclick="showTab('projector')">📈 3-Year ROI</button>
+                <button class="tab-btn" onclick="showTab('scorecard')">🏆 Career Score</button>
+                <button class="tab-btn" onclick="showTab('dashboard')">🎯 Dashboard</button>
+            </div>
+
+            <!-- Inputs Tab -->
+            <div id="inputs" class="tab-content active">
+                <div class="section">
+                    <div class="section-header">ROLE OVERVIEW</div>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Company Name</label>
+                            <input type="text" id="cur_company" placeholder="Current Company">
+                        </div>
+                        <div class="input-group">
+                            <label>Job Title</label>
+                            <input type="text" id="cur_title" placeholder="Marketing Director">
+                        </div>
+                        <div class="input-group">
+                            <label>Company Size</label>
+                            <input type="number" id="cur_size" placeholder="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">BASE COMPENSATION (All $ figures)</div>
+                    <div class="input-grid">
+                        <div></div>
+                        <div class="input-group">
+                            <label>Current Role</label>
+                            <input type="number" id="cur_base" placeholder="150000">
+                        </div>
+                        <div class="input-group">
+                            <label>Offer A</label>
+                            <input type="number" id="offa_base" placeholder="155000">
+                        </div>
+                        <div class="input-group">
+                            <label>Offer B</label>
+                            <input type="number" id="offb_base" placeholder="152000">
+                        </div>
+                    </div>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Target Bonus (%)</label>
+                            <input type="number" step="0.01" id="cur_bonus_pct" placeholder="0.15">
+                        </div>
+                        <div class="input-group">
+                            <label>Bonus Likelihood (%)</label>
+                            <input type="number" step="0.01" id="cur_bonus_like" placeholder="0.80">
+                        </div>
+                        <div class="input-group">
+                            <label>Signing Bonus ($)</label>
+                            <input type="number" id="cur_signing" placeholder="0">
+                        </div>
+                    </div>
+                    <!-- Similar inputs for Offer A/B... -->
+                </div>
+            </div>
+
+            <!-- Other tabs with results... -->
+            <div id="comp" class="tab-content">
+                <div class="result-grid">
+                    <div class="result-card result-current">
+                        <div class="result-number" id="cur_annual_comp">$000,000</div>
+                        <div class="result-label">Current Role<br>Annual Comp</div>
+                    </div>
+                    <div class="result-card result-offer-a">
+                        <div class="result-number" id="offa_annual_comp">$000,000</div>
+                        <div class="result-label">Offer A<br>Annual Comp</div>
+                    </div>
+                    <div class="result-card result-offer-b">
+                        <div class="result-number" id="offb_annual_comp">$000,000</div>
+                        <div class="result-label">Offer B<br>Annual Comp</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard" class="tab-content">
+                <div class="recommendation rec-stay" id="recommendation">
+                    🏆 STAY. Your current role wins on both comp and career quality. Use these offers as leverage for a raise or title upgrade.
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter CTA -->
+        <div class="newsletter-cta">
+            <h2>Want the verified $50K–$250K remote marketing jobs?</h2>
+            <p>Join 1,800+ marketing professionals getting weekly opportunities + career intelligence</p>
+            <a href="https://marketersremote.com" class="cta-button" style="background: var(--navy); color: var(--gold);">Join Newsletter Free</a>
+        </div>
+    </div>
+
+    <script>
+        // Calculator logic
+        function calculate() {
+            // Get all inputs
+            const cur_base = parseFloat(document.getElementById('cur_base').value) || 0;
+            const cur_bonus_pct = parseFloat(document.getElementById('cur_bonus_pct').value) || 0;
+            const cur_bonus_like = parseFloat(document.getElementById('cur_bonus_like').value) || 0;
+            // ... get all other inputs
+
+            // Calculate true comp
+            const cur_bonus_val = cur_base * cur_bonus_pct * cur_bonus_like;
+            const cur_annual = cur_base + cur_bonus_val; // + other components
+
+            document.getElementById('cur_annual_comp').textContent = '$' + cur_annual.toLocaleString();
+            // Update all results...
+
+            // Update recommendation
+            // Complex logic matching Excel...
+        }
+
+        // Tab switching
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Auto-calculate on input change
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculate);
+        });
+
+        // Initialize
+        calculate();
+    </script>
+</body>
+</html>
